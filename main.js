@@ -11,8 +11,8 @@ document.body.appendChild(canvas);
 
 let spaceImage,spaceshipImage,bulletImage,enemyImage,gameImage;
 //우주선좌표 
-let spaceshipX
-let spaceshipY
+let spaceshipX=canvas.width/2-32;
+let spaceshipY=canvas.height-64;
 function loadImage(){
     spaceImage = new Image();
     spaceImage.src="images/space.jpg";
@@ -32,6 +32,7 @@ function loadImage(){
 
 function render(){
     ctx.drawImage(spaceImage, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(spaceshipImage,spaceshipX,spaceshipY);
 }
 function main(){
     render()
