@@ -29,6 +29,18 @@ function loadImage(){
     gameImage= new Image();
     gameImage.src="images/game.jpg"
 }
+let keysDown={}
+function setupKeyboardListener(){
+    document.addEventListener("keydown",function(event){
+        console.log("무슨 키 눌림?",event.key)
+        keysDown[event.key]=true;
+        console.log("키다운 객체에 들어간 값은?",keysDown);
+    });
+    document.addEventListener("keyup",function(event){
+        delete keysDown[event.key]
+        console.log("버튼 클릭 후", keysDown);
+    })
+}
 
 function render(){
     ctx.drawImage(spaceImage, 0, 0, canvas.width, canvas.height);
@@ -39,4 +51,5 @@ function main(){
     requestAnimationFrame(main)
 }
 loadImage();
+setupKeyboardListener();
 main();
