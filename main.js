@@ -13,6 +13,19 @@ let spaceImage,spaceshipImage,bulletImage,enemyImage,gameImage;
 //우주선좌표 
 let spaceshipX=canvas.width/2-32;
 let spaceshipY=canvas.height-64;
+
+let bulletList =[];
+function Bullet(){
+    this.x=0;
+    this.y=0;
+    this.init=function(){
+    this.x = spaceshipX;
+    this.y = spaceshipY;
+
+    bulletList.push(this)
+    }
+}
+
 function loadImage(){
     spaceImage = new Image();
     spaceImage.src="images/space.jpg";
@@ -33,14 +46,20 @@ let keysDown={};
 
 function setupKeyboardListener(){
     document.addEventListener("keydown",function(event){
-        console.log("무슨 키 눌림?",event.keyCode)
+        
         keysDown[event.keyCode]=true;
-        console.log("키다운 객체에 들어간 값은?",keysDown);
+    
     });
     document.addEventListener("keyup",function(event){
         delete keysDown[event.keyCode];
-        console.log("버튼 클릭 후", keysDown);
+        if(event.keyCode ==32){
+            createBullet();//총알 생성    
+        }
     });
+}
+function createBullet(){
+    console.log("총알생성");
+    let b = new Bullet();
 }
 function update(){
     if( 39 in keysDown ){
@@ -60,6 +79,10 @@ function update(){
 function render(){
     ctx.drawImage(spaceImage, 0, 0, canvas.width, canvas.height);
     ctx.drawImage(spaceshipImage,spaceshipX,spaceshipY);
+
+    for(let i=0; i<bulletList.length; i++){
+        ctx.drawImage(bulletImage,bulletList[i].x,bulletList[i].y);
+    }
 }
 function main(){
     update();//좌표값 업데이트
