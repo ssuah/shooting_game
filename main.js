@@ -14,16 +14,19 @@ let spaceImage,spaceshipImage,bulletImage,enemyImage,gameImage;
 let spaceshipX=canvas.width/2-32;
 let spaceshipY=canvas.height-64;
 
-let bulletList =[];
+let bulletList =[];//총알리스트
 function Bullet(){
     this.x=0;
     this.y=0;
     this.init=function(){
-    this.x = spaceshipX;
-    this.y = spaceshipY;
+        this.x = spaceshipX + 20;
+        this.y = spaceshipY;
 
-    bulletList.push(this)
-    }
+        bulletList.push(this);
+    };
+    this.update=function(){
+        this.y-=7;
+    };
 }
 
 function loadImage(){
@@ -60,6 +63,8 @@ function setupKeyboardListener(){
 function createBullet(){
     console.log("총알생성");
     let b = new Bullet();
+    b.init();
+    console.log("새로운 총알 리스트",bulletList);
 }
 function update(){
     if( 39 in keysDown ){
@@ -73,6 +78,9 @@ function update(){
     }
     if(spaceshipX >= canvas.width-64){
         spaceshipX=canvas.width-64;
+    }
+    for(let i = 0; i<bulletList.length; i++){
+        bulletList[i].update();
     }
 }
 
