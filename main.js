@@ -28,6 +28,23 @@ function Bullet(){
         this.y-=7;
     };
 }
+function generateRandomValue(min,max){
+    let randomNum=Math.floor(Math.random()*(max-min+1))+min;//floor :내림 함수 
+    return randomNum;
+}
+let enemyList=[];
+function Enemy(){
+    this.x=0;
+    this.y=0;
+    this.init=function(){
+        this.y=0;
+        this.x=generateRandomValue(0,canvas.width-48);
+        enemyList.push(this);
+    };
+    this.update=function(){
+        this.y +=2;
+    }
+}
 
 function loadImage(){
     spaceImage = new Image();
@@ -66,6 +83,12 @@ function createBullet(){
     b.init();
     console.log("새로운 총알 리스트",bulletList);
 }
+function createEnemy(){
+    const interval= setInterval(function(){
+        let e =new Enemy();
+        e.init();
+    },1000);
+}
 function update(){
     if( 39 in keysDown ){
         spaceshipX +=5;//우주선 속도 
@@ -82,14 +105,20 @@ function update(){
     for(let i = 0; i<bulletList.length; i++){
         bulletList[i].update();
     }
+    for(let i=0;i<enemyList.length;i++){
+        enemyList[i].update();
+    }
 }
 
 function render(){
     ctx.drawImage(spaceImage, 0, 0, canvas.width, canvas.height);
     ctx.drawImage(spaceshipImage,spaceshipX,spaceshipY);
-
+    
     for(let i=0; i<bulletList.length; i++){
         ctx.drawImage(bulletImage,bulletList[i].x,bulletList[i].y);
+    }
+    for(let i=0;i<enemyList.length;i++){
+        ctx.drawImage(enemyImage,enemyList[i].x,enemyList[i].y);
     }
 }
 function main(){
@@ -99,4 +128,5 @@ function main(){
 }
 loadImage();
 setupKeyboardListener();
+createEnemy();
 main();
