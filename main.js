@@ -132,7 +132,10 @@ function main(){
     if(!gameOver){
     update();//좌표값 업데이트
     render();//그리기
-    requestAnimationFrame(main);}
+    requestAnimationFrame(main);
+}else{
+    ctx.drawImage(gameImage,10,50,380,200);
+}
 }
 loadImage();
 setupKeyboardListener();
